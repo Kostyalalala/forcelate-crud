@@ -1,31 +1,41 @@
 package com.jdv.engine.service;
 
+import static com.jdv.engine.dto.Transfromer.UserDTOToEntity;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.jdv.engine.db.model.User;
 import com.jdv.engine.db.model.enums.Color;
 import com.jdv.engine.db.repository.UserRepository;
+import com.jdv.engine.dto.Transfromer;
+import com.jdv.engine.dto.UserDTO;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class CustomUserService {
-    
+
     private final UserRepository repository;
 
-    public void saveUser(User user) {
-        repository.save(user);
+    public void saveUser(UserDTO userDTO) {
+        repository.save(UserDTOToEntity(userDTO));
     }
 
-    public List<User> getUsersByAge(Integer age) {
-        return repository.getUsersByAge(age);
+    public List<UserDTO> getUsersByAge(Integer age) {
+        return repository.getUsersWithOlderAge(age)
+            .stream()
+            .map(Transfromer::UserEntityToDTO)
+            .collect(Collectors.toList());
     }
 
-    public List<User> getUsersByArticleColor(Color color) {
-        return repository.findUsersByArticleColor(color.toString());
+    public List<UserDTO> getUsersByArticleColor(Color color) {
+        return repository.findUsersByArticleColor(color.toString())
+            .stream()
+            .map(Transfromer::UserEntityToDTO)
+            .collect(Collectors.toList());
     }
 
     public List<String> getDistinctUsersWithArticles() {

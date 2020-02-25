@@ -11,17 +11,17 @@ import com.jdv.engine.db.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-
-    public List<User> getUsersByAge(Integer age);
+    @Query(value = "SELECT * FROM users WHERE age >:age", nativeQuery = true)
+    public List<User> getUsersWithOlderAge(@Param("age") Integer age);
 
     @Query(
-            value = "SELECT u FROM users u LEFT JOIN articles a ON a.id = u.id WHERE a.color =:color",
+            value = "SELECT * FROM users u LEFT JOIN articles a ON a.id = u.id WHERE a.color =:color",
             nativeQuery = true
     )
     public List<User> findUsersByArticleColor(@Param("color") String color);
 
     @Query(
-            value = "SELECT DISTINCT(u.name) FROM users u LEFT JOIN articles a ON a.userId = u.id WHERE COUNT(u.articles) > 3",
+            value = "SELECT distinct(u.name) FROM users u WHERE (SELECT count(a.id) FROM articles a WHERE a.user_id = u.id) > 3;",
             nativeQuery = true
     )
     public List<String> getDistinctUsersWithArticles();

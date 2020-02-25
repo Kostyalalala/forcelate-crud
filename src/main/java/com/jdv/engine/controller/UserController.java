@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jdv.engine.db.model.User;
 import com.jdv.engine.db.model.enums.Color;
+import com.jdv.engine.dto.UserDTO;
 import com.jdv.engine.service.CustomUserService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,18 +23,18 @@ public class UserController {
     private final CustomUserService userService;
 
     @PostMapping("/save")
-    public void saveUser(@RequestBody User user) {
-        userService.saveUser(user);
+    public void saveUser(@RequestBody UserDTO userDTO) {
+        userService.saveUser(userDTO);
     }
 
     @GetMapping("/age/{age}")
-    public List<User> getUsersByAge(@PathVariable("age") Integer age) {
+    public List<UserDTO> getUsersByAge(@PathVariable("age") Integer age) {
         return userService.getUsersByAge(age);
     }
 
     @GetMapping("/color/{color}")
-    public List<User> getUsersByArticleColor(@PathVariable("color") Color color) {
-        return userService.getUsersByArticleColor(color);
+    public List<UserDTO> getUsersByArticleColor(@PathVariable("color") String color) {
+        return userService.getUsersByArticleColor(Color.valueOf(color.toUpperCase()));
 
     }
 

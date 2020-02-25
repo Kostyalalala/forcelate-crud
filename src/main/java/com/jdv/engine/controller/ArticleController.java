@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jdv.engine.db.model.Article;
+import com.jdv.engine.dto.ArticleDTO;
 import com.jdv.engine.service.ArticleService;
 
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ public class ArticleController {
     private final ArticleService articleService;
 
     @PostMapping("/save")
-    public void saveArticle(Article article) {
-        articleService.saveArticle(article);
+    public void saveArticle(ArticleDTO articleDTO) {
+        articleService.saveArticle(articleDTO);
     }
 }
