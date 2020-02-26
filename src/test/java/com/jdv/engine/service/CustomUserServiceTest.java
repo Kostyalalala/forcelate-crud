@@ -30,7 +30,7 @@ import com.jdv.engine.dto.UserDTO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
-public class CustomUserTest {
+public class CustomUserServiceTest {
     @Configuration
     @Import({ UserRepositoryBean.class })
     static class ContextConfiguration {
