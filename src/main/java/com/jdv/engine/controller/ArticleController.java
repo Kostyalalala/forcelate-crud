@@ -1,5 +1,9 @@
 package com.jdv.engine.controller;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,12 +15,22 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/article")
+@RequestMapping(value = "api/article")
 public class ArticleController {
     private final ArticleService articleService;
 
     @PostMapping("/save")
-    public void saveArticle(ArticleDTO articleDTO) {
-        articleService.saveArticle(articleDTO);
+    public Integer saveArticle(ArticleDTO articleDTO) {
+        return articleService.saveArticle(articleDTO);
+    }
+
+    @GetMapping("/{id}")
+    public ArticleDTO getArticleById(@PathVariable Integer id) {
+        return articleService.getArticleById(id);
+    }
+
+    @GetMapping("/all")
+    public List<ArticleDTO> getAllArticles() {
+        return articleService.getAllArticles();
     }
 }

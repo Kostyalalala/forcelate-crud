@@ -31,16 +31,32 @@ public class DBConfig {
     }
 
     private void createUsers() {
-        ids.add(userRepository.saveAndFlush(User.builder().name("Tom").age(21).build()).getId());
-        ids.add(userRepository.saveAndFlush(User.builder().name("John").age(19).build()).getId());
-        ids.add(userRepository.saveAndFlush(User.builder().name("Anna").age(29).build()).getId());
-        ids.add(userRepository.saveAndFlush(User.builder().name("Jerry").age(11).build()).getId());
-        ids.add(userRepository.saveAndFlush(User.builder().name("Maria").age(43).build()).getId());
+        ids.add(userRepository.save(User.builder().name("Tom").age(21).build()).getId());
+        ids.add(userRepository.save(User.builder().name("John").age(19).build()).getId());
+        ids.add(userRepository.save(User.builder().name("John").age(16).build()).getId());
+        ids.add(userRepository.save(User.builder().name("Anna").age(29).build()).getId());
+        ids.add(userRepository.save(User.builder().name("Jerry").age(11).build()).getId());
+        ids.add(userRepository.save(User.builder().name("Maria").age(43).build()).getId());
     }
 
     private void createArticles() {
-        ids.stream().forEach(id -> {
-            articleRepository.save(Article.builder().text("some text").color(Color.GREEN).userId(1).build());
-        });
+        ids.stream().forEach(id -> articleRepository.save(getArticles(id)));
+    }
+
+    private List<Article> getArticles(Integer userId) {
+        List<Article> articles = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            articles.add(getRandomArticle(userId));
+        }
+        return articles;
+
+    }
+
+    private Article getRandomArticle(Integer userId) {
+        return Article.builder().text("some text").color(getColor(userId)).userId(userId).build();
+    }
+
+    private Color getColor(Integer userId) {
+        return (userId % 2 == 0) ? Color.GREEN : Color.RED;
     }
 }

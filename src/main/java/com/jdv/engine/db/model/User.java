@@ -1,3 +1,4 @@
+
 package com.jdv.engine.db.model;
 
 import javax.persistence.Entity;

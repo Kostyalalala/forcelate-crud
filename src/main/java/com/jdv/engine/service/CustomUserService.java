@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.jdv.engine.db.model.enums.Color;
 import com.jdv.engine.db.repository.UserRepository;
 import com.jdv.engine.dto.Transfromer;
 import com.jdv.engine.dto.UserDTO;
@@ -20,8 +19,8 @@ public class CustomUserService {
 
     private final UserRepository repository;
 
-    public void saveUser(UserDTO userDTO) {
-        repository.save(UserDTOToEntity(userDTO));
+    public Integer saveUser(UserDTO userDTO) {
+        return repository.save(UserDTOToEntity(userDTO)).getId();
     }
 
     public List<UserDTO> getUsersByAge(Integer age) {
@@ -31,8 +30,8 @@ public class CustomUserService {
             .collect(Collectors.toList());
     }
 
-    public List<UserDTO> getUsersByArticleColor(Color color) {
-        return repository.findUsersByArticleColor(color.toString())
+    public List<UserDTO> getUsersByArticleColor(String color) {
+        return repository.findUsersByArticleColor(color.toUpperCase())
             .stream()
             .map(Transfromer::UserEntityToDTO)
             .collect(Collectors.toList());
