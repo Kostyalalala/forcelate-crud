@@ -1,0 +1,133 @@
+{
+	"variables": [],
+	"info": {
+		"name": "JWTAuth Security",
+		"_postman_id": "1f804e54-4717-4340-9d8b-93415ee47ac9",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Registration",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"name\": \"Forcelate Dev\",\n \"email\": \"dev@gmail.com\",\n \"password\": \"password\"\n}"
+				},
+				"url": "http://localhost:8080/registration",
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Distinct Users Names With More Than 3 Articles",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJjcmVhdGVkQXQiOjE1MTUwNDU4MTEsInVzZXJJZCI6ImNhNjIwYTM4LTM0M2EtNDRkZi1iNTg5LTIyMzBiYTNhMTM4OCJ9.MZ6XvGbhjDHrqef7oeri3dmn1-j9XFI0nyUT90yPRlQTexQmVkZSLm2vdetg27hGuJcfqejHFWqTxRLC9LtAMA"
+					}
+				],
+				"url": "http://localhost:8080/api/user/name",
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Users That Have Articles Green Color",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJjcmVhdGVkQXQiOjE1MTUwNDU4MTEsInVzZXJJZCI6ImNhNjIwYTM4LTM0M2EtNDRkZi1iNTg5LTIyMzBiYTNhMTM4OCJ9.MZ6XvGbhjDHrqef7oeri3dmn1-j9XFI0nyUT90yPRlQTexQmVkZSLm2vdetg27hGuJcfqejHFWqTxRLC9LtAMA"
+					}
+				],
+				"url": "http://localhost:8080/api/user/color/green",
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Users That Older Than 18",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJjcmVhdGVkQXQiOjE1MTUwNDU4MTEsInVzZXJJZCI6ImNhNjIwYTM4LTM0M2EtNDRkZi1iNTg5LTIyMzBiYTNhMTM4OCJ9.MZ6XvGbhjDHrqef7oeri3dmn1-j9XFI0nyUT90yPRlQTexQmVkZSLm2vdetg27hGuJcfqejHFWqTxRLC9LtAMA"
+					}
+				],
+				"url": "http://localhost:8080/api/user/age/18",
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Save User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJjcmVhdGVkQXQiOjE1MTUwNDU4MTEsInVzZXJJZCI6ImNhNjIwYTM4LTM0M2EtNDRkZi1iNTg5LTIyMzBiYTNhMTM4OCJ9.MZ6XvGbhjDHrqef7oeri3dmn1-j9XFI0nyUT90yPRlQTexQmVkZSLm2vdetg27hGuJcfqejHFWqTxRLC9LtAMA"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"name\": \"Tony\",\n \"age\": \"22\"\n}"
+				},
+				"url": "http://localhost:8080/api/user/save",
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Save Article",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJjcmVhdGVkQXQiOjE1MTUwNDU4MTEsInVzZXJJZCI6ImNhNjIwYTM4LTM0M2EtNDRkZi1iNTg5LTIyMzBiYTNhMTM4OCJ9.MZ6XvGbhjDHrqef7oeri3dmn1-j9XFI0nyUT90yPRlQTexQmVkZSLm2vdetg27hGuJcfqejHFWqTxRLC9LtAMA"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"text\": \"article text\",\n \"color\": \"red\"\n}"
+				},
+				"url": "http://localhost:8080/api/article/save",
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
