@@ -1,6 +1,8 @@
 package com.jdv.engine.controller;
 
 import static com.jdv.engine.constants.Constants.AGE;
+import static com.jdv.engine.constants.Constants.AUTHORIZATION;
+import static com.jdv.engine.constants.Constants.JWT_TOKEN;
 import static com.jdv.engine.constants.Constants.TOM_OLDER_DTO;
 import static com.jdv.engine.constants.Constants.TOM_YOUNGER_DTO;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,6 +27,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jdv.engine.configuration.CustomUserServiceBean;
 import com.jdv.engine.dto.UserDTO;
 import com.jdv.engine.service.CustomUserService;
@@ -32,6 +36,8 @@ import com.jdv.engine.service.CustomUserService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
 public class UserControllerTest {
+
+
     @Configuration
     @Import({ CustomUserServiceBean.class })
     static class ContextConfiguration {
@@ -51,6 +57,8 @@ public class UserControllerTest {
     @Autowired
     private UserController resourceUnderTest;
 
+    private ObjectMapper mapper = new ObjectMapper();
+
     @Test
     public void getUsersByAge() throws Exception {
         List<UserDTO> users = Arrays.asList(TOM_OLDER_DTO);
@@ -58,9 +66,19 @@ public class UserControllerTest {
 
         MockMvc mvc = MockMvcBuilders.standaloneSetup(resourceUnderTest).build();
 
-        mvc.perform(get("/user/age/" + AGE).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+        String result = mvc
+            .perform(get("/api/user/age/" + AGE).contentType(MediaType.APPLICATION_JSON)
+                .header(AUTHORIZATION, JWT_TOKEN))
+            .andExpect(status().isOk())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
 
+        List<UserDTO> resultUsers = mapper.readValue(result, new TypeReference<List<UserDTO>>(){});
+        
+        assertThat(resultUsers).isEqualTo(users);
         verify(customUserService).getUsersByAge(AGE);
         assertThat(resourceUnderTest.getUsersByAge(AGE)).doesNotContain(TOM_YOUNGER_DTO);
+
     }
 }
